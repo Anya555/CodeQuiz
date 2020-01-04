@@ -1,0 +1,59 @@
+body {
+    background-color: lightgray;
+}
+
+.header{
+padding-top: 30px;
+}
+
+.main-area {
+    padding-top: 50px;
+    margin-top: 50px;
+    width: 600px;
+    height:350px;
+    border: 1px solid darkgray;
+    background-color: white;
+}
+
+h1{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+text-align: center;
+}
+
+p {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+}
+
+.btn{
+    width: 150px;
+    height:50px;
+    background-color: darkorchid;
+    border-color: darkorchid;
+    color:white;
+  
+}
+
+.question-area{
+  position:relative;
+}
+ 
+.qst {
+    float:left;
+    margin-top:-140px;
+}
+
+#answer{
+    width: 100px;
+    height: 5px;
+    background-color: darkorchid;
+    border-color: darkorchid;
+    color:white;
+    float:left;
+    margin-top: -90px;
+}
+
+.b2,.b3,.b4{
+    margin-top: 10px;
+}
+

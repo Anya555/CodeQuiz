@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<!--making a page layout by using bootstrap grid and filling up a content of a page-->
+
+<body>
+    <div class="header container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Code Quiz Challenge</h1>
+            </div>
+        </div>
+    </div>
+
+    <!--Creating a main area, where all main content will be-->
+    <div class="main-area container">
+        <div class="row">
+            <div class="col-12">
+                <p id="paragraph">Score is calculated by time remaining.
+                    <br>
+                    Answering quickly and correctly results in a higher score.
+                    <br>
+                    Answering incorrectly results in a time penalty,for example:
+                    <br>
+                    15 seconds are subtracted from time remaining.
+                </p>
+                
+
+                <!--Creating an area that includes questions and answer buttons and hiding it from being displayed 
+        on initial page by using display none attribute -->
+
+                <div id="question-area" style="display:none">
+                    <h3 id="question" class="qst">Question</h3>
+                    <div id="answer">
+                        <button class="btn b1"></button>
+                        <button class="btn b2"></button>
+                        <button class="btn b3"></button>
+                        <button class="btn b4"></button>
+                    </div>
+                </div>
+           
+
+        <!--creating a start quiz button-->
+        <div class="row">
+            <div class="col-12 offset-4">
+                <button id="start-btn" class="btn">Start Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js">
+    </script>
+</body>
+
+</html>
