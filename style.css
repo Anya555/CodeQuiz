@@ -34,26 +34,38 @@ p {
   
 }
 
-.question-area{
-  position:relative;
-}
- 
 .qst {
     float:left;
     margin-top:-140px;
 }
 
+.main-area{
+    position: relative;
+}
 #answer{
     width: 100px;
     height: 5px;
     background-color: darkorchid;
     border-color: darkorchid;
     color:white;
-    float:left;
     margin-top: -90px;
 }
 
-.b2,.b3,.b4{
-    margin-top: 10px;
+.b1,.b2,.b3,.b4{
+position: absolute;
+ 
 }
 
+.b1 {
+top:50px;
+}
+
+.b2 {
+  top:115px;
+}
+.b3{
+    top:180px;
+}
+.b4 {
+    top:240px;
+}
