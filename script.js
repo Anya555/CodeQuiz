@@ -8,7 +8,33 @@ var firstAnswer = document.getElementById("1st");
 var secondAnswer = document.getElementById("2d");
 var thirdAnswer = document.getElementById("3d");
 var fourthAnswer = document.getElementById("4th");
+var messageBox = document.getElementById("message-box");
 var timer = document.getElementById("timer");
+var score = document.getElementById("score");
+var scorePage = document.getElementById("score-page");
+var userInitials = document.getElementById("initials");
+var timerCount = 15;
+var gameTime = 75;
+var currQuestionTimer;
+var highScore = 0;
+
+// storing final score and initials into local storage
+
+var initials = [];
+var finalScore = [];
+
+var init = localStorage.getItem("initials");
+
+if (init){
+    initials = JSON.parse(init);
+}
+var updateLocalStorage = function (){
+    localStorage.setItem("initials", JSON.stringify(initials));
+}
+
+
+
+
 
 // storing questions as an array of objects
 
@@ -19,7 +45,7 @@ var quizElements = [
         choice2: "<hr>",
         choice3: "<br>",
         choice4: "<break>",
-        answer: "<br>", 
+        answer: "<br>",
     },
 
     {
@@ -28,7 +54,7 @@ var quizElements = [
         choice2: "<css>",
         choice3: "<script>",
         choice4: "<html>",
-        answer: "<style>", 
+        answer: "<style>",
     },
 
     {
@@ -37,7 +63,7 @@ var quizElements = [
         choice2: "{body;color:black;}",
         choice3: "body{color:black};",
         choice4: "body:{color=black;}",
-        answer: "body{color:black};", 
+        answer: "body{color:black};",
     },
 
     {
@@ -46,7 +72,7 @@ var quizElements = [
         choice2: "if(i != 5)",
         choice3: "if(i<>5)",
         choice4: "if i=>5",
-        answer: "if(i != 5)", 
+        answer: "if(i != 5)",
     },
 
     {
@@ -55,7 +81,7 @@ var quizElements = [
         choice2: "8",
         choice3: "12",
         choice4: "1",
-        answer: "12", 
+        answer: "12",
     }
 ];
 
@@ -73,6 +99,7 @@ function startQuiz() {
     startBtn.style.visibility = "hidden";
     paragraph.style.visibility = "hidden";
     questionsArea.style.display = "block";
+    displayQuestions();
 }
 
 // declaring variables for index of first and last question in array
@@ -82,27 +109,108 @@ var lastQuestionIndex = quizElements.length - 1;
 // function that will display current question and choices
 function displayQuestions() {
     var newQuestion = quizElements[currentQuestionIndex];
-
     qstn.innerText = newQuestion.question;
     firstAnswer.innerText = newQuestion.choice1;
     secondAnswer.innerText = newQuestion.choice2;
     thirdAnswer.innerText = newQuestion.choice3;
     fourthAnswer.innerText = newQuestion.choice4;
+    startTimer();
 }
 
-displayQuestions();
 
-var secondsLeft = 15;
-answer = true;
+function checkForAnswer() {
+    console.log(timerCount);
+    gameTime--;
+    timer.textContent = "Seconds left" + ":" + gameTime;
+    if (timerCount === 0) {
+        clearInterval(currQuestionTimer);
+
+        currentQuestionIndex++;
+        timerCount = 15;
+        displayQuestions();
+    }
+}
+
+// function that will show 'wrong' or 'correct' message every time question is answered and removing a 
+// message after 1 second
+var secondsMessageShown = 1;
+
+function showMessage(msg) {
+    var p = document.createElement("p");
+    p.textContent = msg;
+    messageBox.appendChild(p);
+
+    var timerInterval = setInterval(function () {
+        secondsMessageShown--;
+
+        if (secondsMessageShown === 0)
+            clearInterval(timerInterval);
+    }, 1000);
+}
+
+
+
+// function that starts a new timer once a question has been answered
+function startTimer() {
+    currQuestionTimer = setInterval(checkForAnswer, 1000);
+}
+
 
 // function that will move user to the next question once user selects from choises given
 
-answerButton.addEventListener("click", answer);
-function renderNextQuestion (){
+document.addEventListener("click", function (event) {
+    event.preventDefault();
+    if (event.target.classList.contains("answer-btn")) {
+        var answerButton = event.target;
+        if (answerButton.textContent == quizElements[currentQuestionIndex].answer) {
 
-    if (answerButton = answer){
-     currentQuestionIndex++;
-     
+            console.log("match");
+            showMessage("Correct!");
+           
+
+            // adding score
+            function scoreCount() {
+                if (score <= timerCount) {
+                    score.innerHTML = highScore;
+                    highScore++;
+                }
+            }
+        }
+
+        else {
+            showMessage("Wrong!");
+        }
+
+        clearInterval(currQuestionTimer);
+        currentQuestionIndex++;
+        displayQuestions();
     }
-    displayQuestions();
+});
+
+
+// function that will move to score screen once all questions are answered
+
+function showScores() {
+    if (currentQuestionIndex = lastQuestionIndex) {
+        questionsArea.style.display = "none";
+        scorePage.style.display = "block";
     }
+    return displayQuestions;
+}
+
+
+
+
+
+
+// Page loads
+   // User clicks on start button
+   // Start question loop
+      // Display question and all answers
+      // Start timer countdown
+         // If an answer is clicked:
+            // Stop countdown
+            // Determine if answer is correct
+            // If correct, increase score
+        // If countdown gets to 0, move to next question
+        // Move to next question in the loop

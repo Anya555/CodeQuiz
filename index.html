@@ -17,10 +17,7 @@
     <div class="header container">
         <div class="row">
             <div class="col-12">
-                <div class="timer" style="display:none"></div>
                 <h1>Code Quiz Challenge</h1>
-                <h3 style="display:none">Your final score is:</h3>
-                <h2 style="display:none">All Done!</h2>
             </div>
         </div>
     </div>
@@ -29,6 +26,7 @@
     <div class="main-area container">
         <div class="row">
             <div class="col-12">
+                <div id="timer" class="time"></div>
                 <p id="paragraph">Score is calculated by time remaining.
                     <br>
                     Answering quickly and correctly results in a higher score.
@@ -37,10 +35,14 @@
                     <br>
                     15 seconds are subtracted from time remaining.
                 </p>
-                <div style="display:none">
+                
+                <div id ="score-page" style="display:none">
+                    <h2>All Done!</h2>
+                    <h3 id="score">Your final score is:</h3>
+               
                     <form class="form-inline">
                         <div class="form-group mb-2">
-                          <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Enter initials">
+                          <input type="text" readonly class="form-control-plaintext" id="initials" value="Enter initials">
                         </div>
                         <div class="form-group mx-sm-3 mb-2">
                           <label for="inputPassword2" class="sr-only"></label>
@@ -50,19 +52,25 @@
                       </form>
                 </div>
 
+            
+
                 <!--Creating an area that includes questions and answer buttons and hiding it from being displayed 
         on initial page by using 'display none' attribute -->
 
                 <div id="question-area" style="display:none">
                     <h3 id="questionEl" class="qst">Question</h3>
                     <div id="answerEl">
-                        <button id="1st" class="btn b1"></button>
-                        <button id="2d" class="btn b2"></button>
-                        <button id="3d" class="btn b3"></button>
-                        <button id="4th" class="btn b4"></button>
+                        <button id="1st" class="answer-btn btn b1"></button>
+                        <button id="2d" class="answer-btn btn b2"></button>
+                        <button id="3d" class="answer-btn btn b3"></button>
+                        <button id="4th" class="answer-btn btn b4"></button>
                     </div>
                 </div>
            
+                
+                <div id="message-box" class="message"></div>
+
+
 
         <!--creating a start quiz button-->
         <div class="row">
