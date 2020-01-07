@@ -17,11 +17,59 @@ var timerCount = 15;
 var gameTime = 75;
 var currQuestionTimer;
 var highScore = 0;
+var questionsAnswered = 0;
+
+var allInitials = [];
+var allScores = [];
 
 // storing final score and initials into local storage
 
-var initials = [];
-var finalScore = [];
+var initials = ["GT", "AB", "CD"];
+var finalScores = [20, 45, 100];
+
+// When saving a game
+// 1. Get index of the initials entered in the initials array
+// 2. If the initials have an index > -1
+// 3. Update finalScores[index] == new highscre
+
+
+// This runs when the page loads
+var getFromLocalStorage = function(){
+    var init = JSON.parse(localStorage.getItem("initials"));
+    var scores = JSON.parse(localStorage.getItem("scores"));
+
+    if( init && init.length ){
+        allInitials = init;
+    }
+
+    if( scores && scores.length ){
+        allScores = scores;
+    }
+}
+
+var saveToLocalStorage = function(){
+    localStorage.setItem("initials", JSON.stringify(allInitials));
+    localStorage.setItem("scores", allScores);
+}
+
+var saveGame = function(initials){
+    var initialIdx = allInitials.indexOf(initials);
+
+    if( initialIdx > -1 ){
+        var currPlayerHighScore = allScores[initialIdx];
+    }
+
+    if( initialIdx === -1 ){
+        allInitials.push(initials);
+        allScores.push(highScore);
+    } else {
+        if( highScore > currPlayerHighScore ){
+            allScores[initialIdx] = highScore;
+        } 
+    }
+
+    saveToLocalStorage();
+}
 
 var init = localStorage.getItem("initials");
 
@@ -108,16 +156,18 @@ var lastQuestionIndex = quizElements.length - 1;
 
 // function that will display current question and choices
 function displayQuestions() {
-    var newQuestion = quizElements[currentQuestionIndex];
-    qstn.innerText = newQuestion.question;
-    firstAnswer.innerText = newQuestion.choice1;
-    secondAnswer.innerText = newQuestion.choice2;
-    thirdAnswer.innerText = newQuestion.choice3;
-    fourthAnswer.innerText = newQuestion.choice4;
-    startTimer();
+    if( currentQuestionIndex < quizElements.length ){
+        var newQuestion = quizElements[currentQuestionIndex];
+        qstn.innerText = newQuestion.question;
+        firstAnswer.innerText = newQuestion.choice1;
+        secondAnswer.innerText = newQuestion.choice2;
+        thirdAnswer.innerText = newQuestion.choice3;
+        fourthAnswer.innerText = newQuestion.choice4;
+        startTimer();
+    }
 }
 
-
+// Runs every second when a question is loaded
 function checkForAnswer() {
     console.log(timerCount);
     gameTime--;
@@ -129,6 +179,7 @@ function checkForAnswer() {
         timerCount = 15;
         displayQuestions();
     }
+    showScores();
 }
 
 // function that will show 'wrong' or 'correct' message every time question is answered and removing a 
@@ -136,10 +187,14 @@ function checkForAnswer() {
 var secondsMessageShown = 1;
 
 function showMessage(msg) {
-    var p = document.createElement("p");
-    p.textContent = msg;
-    messageBox.appendChild(p);
+    messageBox.textContent = "";
+    messageBox.textContent = msg;
+    
+    setTimeout(function(){
+        messageBox.textContent = "";
+    }, 1000);
 
+    // moving to a new question right after current question has been answered by clearing interval
     var timerInterval = setInterval(function () {
         secondsMessageShown--;
 
@@ -161,20 +216,13 @@ function startTimer() {
 document.addEventListener("click", function (event) {
     event.preventDefault();
     if (event.target.classList.contains("answer-btn")) {
+        console.log('q answered');
+        questionsAnswered++;
         var answerButton = event.target;
         if (answerButton.textContent == quizElements[currentQuestionIndex].answer) {
-
-            console.log("match");
             showMessage("Correct!");
-           
-
-            // adding score
-            function scoreCount() {
-                if (score <= timerCount) {
-                    score.innerHTML = highScore;
-                    highScore++;
-                }
-            }
+            highScore = highScore + timerCount;
+            score.textContent = highScore;
         }
 
         else {
@@ -182,6 +230,7 @@ document.addEventListener("click", function (event) {
         }
 
         clearInterval(currQuestionTimer);
+        showScores();
         currentQuestionIndex++;
         displayQuestions();
     }
@@ -191,13 +240,24 @@ document.addEventListener("click", function (event) {
 // function that will move to score screen once all questions are answered
 
 function showScores() {
-    if (currentQuestionIndex = lastQuestionIndex) {
+    console.log(questionsAnswered + '|' + quizElements.length);
+    if (questionsAnswered == quizElements.length || gameTime === 0)  {
+        console.log("over");
         questionsArea.style.display = "none";
         scorePage.style.display = "block";
     }
-    return displayQuestions;
+    return 
 }
 
+var saveBtn = document.getElementById("save-initials");
+saveBtn.addEventListener("click", function(e){
+    e.preventDefault();
+    var initialsEntered = document.getElementById("initials-field").value;
+    console.log(initialsEntered);
+    saveGame(initialsEntered);
+})
+
+getFromLocalStorage();
 
 
 
