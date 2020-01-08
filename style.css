@@ -82,3 +82,8 @@ top:50px;
     font-size: large;
     color:darkorchid;
 }
+
+#score-page{
+    position:absolute;
+   /* top:30px; */
+}

@@ -13,6 +13,7 @@ var timer = document.getElementById("timer");
 var score = document.getElementById("score");
 var scorePage = document.getElementById("score-page");
 var userInitials = document.getElementById("initials");
+var startPage = document.getElementById("main");
 var timerCount = 15;
 var gameTime = 75;
 var currQuestionTimer;
@@ -27,10 +28,6 @@ var allScores = [];
 var initials = ["GT", "AB", "CD"];
 var finalScores = [20, 45, 100];
 
-// When saving a game
-// 1. Get index of the initials entered in the initials array
-// 2. If the initials have an index > -1
-// 3. Update finalScores[index] == new highscre
 
 
 // This runs when the page loads
@@ -79,9 +76,6 @@ if (init){
 var updateLocalStorage = function (){
     localStorage.setItem("initials", JSON.stringify(initials));
 }
-
-
-
 
 
 // storing questions as an array of objects
@@ -211,18 +205,17 @@ function startTimer() {
 }
 
 
-// function that will move user to the next question once user selects from choises given
+// function that will move user to the next question once user selects from choises given,and collects score
 
 document.addEventListener("click", function (event) {
     event.preventDefault();
     if (event.target.classList.contains("answer-btn")) {
-        console.log('q answered');
         questionsAnswered++;
         var answerButton = event.target;
         if (answerButton.textContent == quizElements[currentQuestionIndex].answer) {
             showMessage("Correct!");
             highScore = highScore + timerCount;
-            score.textContent = highScore;
+            score.innerHTML += highScore;
         }
 
         else {
@@ -240,22 +233,36 @@ document.addEventListener("click", function (event) {
 // function that will move to score screen once all questions are answered
 
 function showScores() {
-    console.log(questionsAnswered + '|' + quizElements.length);
     if (questionsAnswered == quizElements.length || gameTime === 0)  {
-        console.log("over");
         questionsArea.style.display = "none";
         scorePage.style.display = "block";
+        timer.style.display = "none";
     }
     return 
 }
 
+// When saving a game
+// 1. Get index of the initials entered in the initials array
+// 2. If the initials have an index > -1
+// 3. Update finalScores[index] == new highscore
+
+//saving initials
 var saveBtn = document.getElementById("save-initials");
 saveBtn.addEventListener("click", function(e){
     e.preventDefault();
     var initialsEntered = document.getElementById("initials-field").value;
     console.log(initialsEntered);
-    saveGame(initialsEntered);
+    saveGame(initialsEntered);""
+    
+    // going back to start quiz page after user clicks submit button
+    scorePage.style.display = "none";
+    startBtn.style.visibility = "visible";
+    paragraph.style.visibility = "visible";
+    
+    
+    
 })
+
 
 getFromLocalStorage();
 
@@ -274,3 +281,5 @@ getFromLocalStorage();
             // If correct, increase score
         // If countdown gets to 0, move to next question
         // Move to next question in the loop
+        // After las question loads move to scores page
+        
