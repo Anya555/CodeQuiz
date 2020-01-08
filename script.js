@@ -29,7 +29,6 @@ var initials = ["GT", "AB", "CD"];
 var finalScores = [20, 45, 100];
 
 
-
 // This runs when the page loads
 var getFromLocalStorage = function(){
     var init = JSON.parse(localStorage.getItem("initials"));
@@ -134,10 +133,11 @@ var quizElements = [
 startBtn.addEventListener("click", startQuiz);
 
 // function that will hold the logic for when the user clicks on a start quiz button
-
+var currentQuestionIndex;
 function startQuiz() {
     // hiding all initial content and showing quiz content after user clicks on a start quiz button 
     // by using visibility property and display block property
+    currentQuestionIndex = 0;
     startBtn.style.visibility = "hidden";
     paragraph.style.visibility = "hidden";
     questionsArea.style.display = "block";
@@ -145,7 +145,7 @@ function startQuiz() {
 }
 
 // declaring variables for index of first and last question in array
-var currentQuestionIndex = 0;
+// var currentQuestionIndex = 0;
 var lastQuestionIndex = quizElements.length - 1;
 
 // function that will display current question and choices
@@ -168,11 +168,16 @@ function checkForAnswer() {
     timer.textContent = "Seconds left" + ":" + gameTime;
     if (timerCount === 0) {
         clearInterval(currQuestionTimer);
-
         currentQuestionIndex++;
         timerCount = 15;
         displayQuestions();
     }
+
+    // currentQuestionIndex++;
+    // timerCount = 15;
+    // displayQuestions();
+
+
     showScores();
 }
 
@@ -259,14 +264,9 @@ saveBtn.addEventListener("click", function(e){
     startBtn.style.visibility = "visible";
     paragraph.style.visibility = "visible";
     
-    
-    
 })
 
-
 getFromLocalStorage();
-
-
 
 
 
