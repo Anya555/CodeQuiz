@@ -134,10 +134,12 @@ startBtn.addEventListener("click", startQuiz);
 
 // function that will hold the logic for when the user clicks on a start quiz button
 var currentQuestionIndex;
+
 function startQuiz() {
     // hiding all initial content and showing quiz content after user clicks on a start quiz button 
     // by using visibility property and display block property
     currentQuestionIndex = 0;
+    questionsAnswered = 0;
     startBtn.style.visibility = "hidden";
     paragraph.style.visibility = "hidden";
     questionsArea.style.display = "block";
@@ -165,18 +167,13 @@ function displayQuestions() {
 function checkForAnswer() {
     console.log(timerCount);
     gameTime--;
-    timer.textContent = "Seconds left" + ":" + gameTime;
+    timer.textContent = "Seconds left" + ": " + gameTime;
     if (timerCount === 0) {
         clearInterval(currQuestionTimer);
         currentQuestionIndex++;
         timerCount = 15;
         displayQuestions();
     }
-
-    // currentQuestionIndex++;
-    // timerCount = 15;
-    // displayQuestions();
-
 
     showScores();
 }
@@ -269,17 +266,3 @@ saveBtn.addEventListener("click", function(e){
 getFromLocalStorage();
 
 
-
-// Page loads
-   // User clicks on start button
-   // Start question loop
-      // Display question and all answers
-      // Start timer countdown
-         // If an answer is clicked:
-            // Stop countdown
-            // Determine if answer is correct
-            // If correct, increase score
-        // If countdown gets to 0, move to next question
-        // Move to next question in the loop
-        // After las question loads move to scores page
-        
