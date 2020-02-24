@@ -144,6 +144,8 @@ function startQuiz() {
     paragraph.style.visibility = "hidden";
     questionsArea.style.display = "block";
     displayQuestions();
+    timer.textContent = "Seconds left" + ": " + gameTime;
+
 }
 
 // declaring variables for index of first and last question in array
